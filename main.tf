@@ -1,9 +1,3 @@
-variable server_cidr {}
-variable pod_cidr {}
-variable svc_cidr {}
-variable vpn_endpoint {}
-variable vpn_port {}
-
 resource "tls_private_key" "ca" {
   algorithm   = "ECDSA"
   ecdsa_curve = "P521"
@@ -103,16 +97,4 @@ data "template_file" "ovpn_client_config" {
   }
 
   template = "${file("${path.module}/templates/ovpn_client.conf")}"
-}
-
-output "server_cidr" {
-  value = "${var.server_cidr}"
-}
-
-output "server_config" {
-  value = "${data.template_file.ovpn_server_config.rendered}"
-}
-
-output "client_config" {
-  value = "${data.template_file.ovpn_client_config.rendered}"
 }
