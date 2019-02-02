@@ -10,12 +10,11 @@ care of rotating the certificates for you.
 
 ```terraform
 module "openvpn" {
-  source       = "github.com/qmx/terraform-openvpn-module"
-  vpn_endpoint = "localhost"
-  vpn_port     = "31194"
-  server_cidr  = "10.23.0.0/29"
-  pod_cidr     = "10.22.44.0/24"
-  svc_cidr     = "10.96.0.0/16"
+  source            = "github.com/qmx/terraform-openvpn-module"
+  vpn_endpoint      = "localhost"
+  vpn_port          = "31194"
+  server_cidr       = "10.23.0.0/29"
+  additional_routes = ["10.22.44.0/24", "10.96.0.0/16"]
 }
 
 

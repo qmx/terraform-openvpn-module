@@ -71,17 +71,24 @@ resource "tls_locally_signed_cert" "client" {
   allowed_uses = ["client_auth", "digital_signature"]
 }
 
+data "template_file" "additional_routes" {
+  vars {
+    network = "${element(split("/", "${var.additional_routes[count.index]}"), 0)}"
+    netmask = "${cidrnetmask(var.additional_routes[count.index])}"
+  }
+
+  count    = "${length(var.additional_routes)}"
+  template = "${file("${path.module}/templates/route.tmpl")}"
+}
+
 data "template_file" "ovpn_server_config" {
   vars {
-    ca_pem         = "${tls_self_signed_cert.ca.cert_pem}"
-    cert_pem       = "${tls_locally_signed_cert.server.cert_pem}"
-    key_pem        = "${tls_private_key.server.private_key_pem}"
-    server_network = "${element(split("/", "${var.server_cidr}"), 0)}"
-    server_netmask = "${cidrnetmask("${var.server_cidr}")}"
-    pod_network    = "${element(split("/", "${var.pod_cidr}"), 0)}"
-    pod_netmask    = "${cidrnetmask(var.pod_cidr)}"
-    svc_network    = "${element(split("/", "${var.svc_cidr}"), 0)}"
-    svc_netmask    = "${cidrnetmask(var.svc_cidr)}"
+    ca_pem            = "${tls_self_signed_cert.ca.cert_pem}"
+    cert_pem          = "${tls_locally_signed_cert.server.cert_pem}"
+    key_pem           = "${tls_private_key.server.private_key_pem}"
+    server_network    = "${element(split("/", "${var.server_cidr}"), 0)}"
+    server_netmask    = "${cidrnetmask("${var.server_cidr}")}"
+    additional_routes = "${join("", data.template_file.additional_routes.*.rendered)}"
   }
 
   template = "${file("${path.module}/templates/ovpn_server.conf")}"
