@@ -9,7 +9,7 @@ care of rotating the certificates for you.
 ## usage
 
 ```terraform
-module "openvpn" {
+module "openvpn_server" {
   source            = "github.com/qmx/terraform-openvpn-module/server"
   vpn_endpoint      = "localhost"
   vpn_port          = "31194"
