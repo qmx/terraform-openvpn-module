@@ -2,6 +2,16 @@ variable server_cidr {}
 variable vpn_endpoint {}
 variable vpn_port {}
 
+variable ca_cert_validity_period_days {
+  default     = 365
+  description = "ca certificate validity, in days"
+}
+
+variable ca_cert_early_renewal_days {
+  default     = 180
+  description = "ca early certificate renewal, in days"
+}
+
 variable cert_validity_period_days {
   default     = 90
   description = "certificate validity, in days"
