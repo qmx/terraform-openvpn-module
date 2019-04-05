@@ -38,8 +38,8 @@ resource "tls_locally_signed_cert" "server" {
   ca_private_key_pem = "${tls_private_key.ca.private_key_pem}"
   ca_cert_pem        = "${tls_self_signed_cert.ca.cert_pem}"
 
-  validity_period_hours = 730
-  early_renewal_hours   = 480
+  validity_period_hours = "${var.cert_validity_period_days * 24}"
+  early_renewal_hours   = "${var.cert_early_renewal_days * 24}"
 
   allowed_uses = ["server_auth", "digital_signature", "key_encipherment"]
 }

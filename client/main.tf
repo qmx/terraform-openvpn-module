@@ -19,8 +19,8 @@ resource "tls_locally_signed_cert" "client" {
   ca_private_key_pem = "${var.ca_private_key_pem}"
   ca_cert_pem        = "${var.ca_certificate_pem}"
 
-  validity_period_hours = 240
-  early_renewal_hours   = 200
+  validity_period_hours = "${var.cert_validity_period_days * 24}"
+  early_renewal_hours   = "${var.cert_early_renewal_days * 24}"
 
   allowed_uses = ["client_auth", "digital_signature"]
 }

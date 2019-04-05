@@ -6,10 +6,12 @@ variable ca_certificate_pem {}
 variable ca_private_key_pem {}
 variable cert_client_name {}
 
-variable cert_validity_period_hours {
-  default = 240
+variable cert_validity_period_days {
+  default     = 90
+  description = "certificate validity, in days"
 }
 
-variable cert_early_renewal_hours {
-  default = 200
+variable cert_early_renewal_days {
+  default     = 60
+  description = "early certificate renewal, in days"
 }
