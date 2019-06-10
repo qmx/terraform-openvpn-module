@@ -45,7 +45,7 @@ resource "tls_locally_signed_cert" "server" {
 }
 
 data "template_file" "additional_routes" {
-  vars {
+  vars = {
     network = "${element(split("/", "${var.additional_routes[count.index]}"), 0)}"
     netmask = "${cidrnetmask(var.additional_routes[count.index])}"
   }
@@ -55,7 +55,7 @@ data "template_file" "additional_routes" {
 }
 
 data "template_file" "ovpn_server_config" {
-  vars {
+  vars = {
     ca_pem            = "${tls_self_signed_cert.ca.cert_pem}"
     cert_pem          = "${tls_locally_signed_cert.server.cert_pem}"
     key_pem           = "${tls_private_key.server.private_key_pem}"

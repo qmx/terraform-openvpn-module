@@ -26,7 +26,7 @@ resource "tls_locally_signed_cert" "client" {
 }
 
 data "template_file" "ovpn_client_config" {
-  vars {
+  vars = {
     vpn_endpoint = "${var.vpn_endpoint}"
     vpn_port     = "${var.vpn_port}"
     ca_pem       = "${var.ca_certificate_pem}"
