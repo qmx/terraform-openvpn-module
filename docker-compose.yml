@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  openvpn:
+    image: 'qmxme/openvpn'
+    command: ["openvpn", "--config", "/server.conf"]
+    volumes:
+      - ./server.ovpn:/server.conf
+    cap_add:
+      - NET_ADMIN
+  c1:
+    image: 'qmxme/openvpn'
+    command: ["openvpn", "--config", "/c1.ovpn"]
+    volumes:
+      - ./c1.ovpn:/c1.ovpn
+    cap_add:
+      - NET_ADMIN
+    links:
+      - openvpn
+  c2:
+    image: 'qmxme/openvpn'
+    command: ["openvpn", "--config", "/c2.ovpn"]
+    volumes:
+      - ./c2.ovpn:/c2.ovpn
+    cap_add:
+      - NET_ADMIN
+    links:
+      - openvpn
