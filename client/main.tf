@@ -8,7 +8,7 @@ resource "tls_cert_request" "client" {
   private_key_pem = "${tls_private_key.client.private_key_pem}"
 
   subject {
-    common_name = "client"
+    common_name = "${var.cert_client_name}"
   }
 }
 
